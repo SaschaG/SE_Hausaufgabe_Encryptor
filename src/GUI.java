@@ -1,15 +1,19 @@
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.swing.*;
 import javax.swing.border.TitledBorder;
 
 public class GUI extends JFrame {
 
-	Encryptor encryptor;
-	JTextArea textAreaOriginal;
-	JTextArea textAreaEncrypted;
+	private Encryptor encryptor;
+	private JTextArea textAreaOriginal;
+	private JTextArea textAreaEncrypted;
+	private Map<String, EncryptionStrategy>encryptionMap;
+	private JComboBox comboBox;
 	
 	public GUI() {
 		super("Super mega Encryptor.");
@@ -24,7 +28,6 @@ public class GUI extends JFrame {
 		Box box = Box.createVerticalBox();
 		box.setSize(400, 200);
 		boxPanel.add(box);
-		//Lay out the label and scroll pane from top to bottom.
 		
 
 		
@@ -56,7 +59,22 @@ public class GUI extends JFrame {
 		DecryptPressed decryptPressed = new DecryptPressed();
 		decryptButton.addActionListener(decryptPressed);
 		
-		manageEncryptor();
+		//creates and init the super duper Encryptor!
+		initEncryptor();
+		
+		comboBox = new JComboBox(encryptionMap.keySet().toArray());
+		buttonPanel.add(comboBox);
+		comboBox.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				Object selectedStrategy = comboBox.getSelectedItem();
+				EncryptionStrategy strategy = encryptionMap.get(selectedStrategy);
+				encryptor.setEncryptionStrategy(strategy);
+			}
+		});
+		
 	}
 	
 	public class EncryptPressed implements ActionListener {
@@ -77,8 +95,15 @@ public class GUI extends JFrame {
 		} 
 	}
 	
-	public void manageEncryptor(){
+	public void initEncryptor(){
 		encryptor = new Encryptor();
-		encryptor.setEncryptionStrategy(new CopyEncryptor());
+		encryptor.setEncryptionStrategy(new ReverseEncryptor());
+		
+		
+		encryptor = new Encryptor();
+		encryptionMap = new HashMap<String, EncryptionStrategy>();
+		encryptionMap.put("Copy", new CopyEncryptor());
+		encryptionMap.put("Reverse", new ReverseEncryptor());
+		
 	}
 }
