@@ -1,20 +1,16 @@
 
 public class Encryptor {
 
-	Encryptor encryptor;
-	public void setEncryptionStrategy(Encryptor encryptor){
-		this.encryptor = encryptor;
+	EncryptionStrategy  encryptionStrategy;
+	public void setEncryptionStrategy(EncryptionStrategy encryptor){
+		this.encryptionStrategy = encryptor;
 	}
-	
-	public Encryptor getEncryptor(){
-		return encryptor;
+	public String encrypt(String startText) {
+		// TODO Auto-generated method stub
+		return encryptionStrategy.encrypt(startText);
 	}
-	
-	public String encrypt(String text){
-		return encryptor.encrypt(text);
-	}
-	
-	public String decrypt(String text){
-		return encryptor.decrypt(text);
+	public String decrypt(String endText) {
+		// TODO Auto-generated method stub
+		return encryptionStrategy.decrypt(endText);
 	}
 }

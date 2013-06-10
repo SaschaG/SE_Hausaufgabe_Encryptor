@@ -1,13 +1,12 @@
-public class CopyEncryptor extends Encryptor {
+public class CopyEncryptor implements EncryptionStrategy {
 
 
 	public String encrypt(String text){
-		String text2 = new String(text + " " + text);
+		String text2 = new String(text);
 		return text2;
 	}
 	
 	public String decrypt(String text){
-		String text2 = new String(text + " " + text);
-		return text2;
+		return text;
 	}
 }

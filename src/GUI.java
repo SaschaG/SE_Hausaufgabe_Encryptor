@@ -1,16 +1,8 @@
 import java.awt.Color;
-import java.awt.TextArea;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import javax.swing.BorderFactory;
-import javax.swing.Box;
-import javax.swing.BoxLayout;
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JTextArea;
+import javax.swing.*;
 import javax.swing.border.TitledBorder;
 
 public class GUI extends JFrame {
@@ -48,7 +40,7 @@ public class GUI extends JFrame {
 		textAreaOriginal.setBorder(new TitledBorder("Original"));
 		textAreaEncrypted.setBorder(new TitledBorder("Encrypted"));
 		
-		
+		//Fixes the Layout
 		JPanel buttonPanel = new JPanel();
 		buttonPanel .setLayout(new BoxLayout(buttonPanel , BoxLayout.LINE_AXIS));
 		buttonPanel .setBorder(BorderFactory.createEmptyBorder(0, 10, 10, 10));
@@ -61,6 +53,8 @@ public class GUI extends JFrame {
 		
 		JButton decryptButton = new JButton("Decrypt");
 		buttonPanel.add(decryptButton);
+		DecryptPressed decryptPressed = new DecryptPressed();
+		decryptButton.addActionListener(decryptPressed);
 		
 		manageEncryptor();
 	}
@@ -78,7 +72,8 @@ public class GUI extends JFrame {
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
 			// TODO Auto-generated method stub
-			System.out.println(encryptor.decrypt("test test test"));
+			String endText = new String(textAreaEncrypted.getText());
+			textAreaOriginal.setText(encryptor.decrypt(endText));
 		} 
 	}
 	
